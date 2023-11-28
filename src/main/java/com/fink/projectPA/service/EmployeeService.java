@@ -18,6 +18,14 @@ import java.util.ArrayList;
  */
 public class EmployeeService {
     
+    private static final EmployeeService instance = new EmployeeService();
+
+    private EmployeeService() {
+    }
+
+    public static EmployeeService getInstance() {
+        return instance;
+    } 
     public void addNewEmployee(Employees employee) throws WarehouseException{
         Connection con=null;
         try{

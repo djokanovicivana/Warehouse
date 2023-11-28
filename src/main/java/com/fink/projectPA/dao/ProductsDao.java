@@ -49,13 +49,13 @@ public class ProductsDao {
         
     }
     }
-    public void delete(Connection con, Products product) throws SQLException {
+    public void delete(Connection con, int productId) throws SQLException {
         PreparedStatement ps = null;
         String sql="DELETE FROM Products WHERE ProductId=?";  
         try {
-            OrderDetailsDao.getInstance().delete(con, product);
+            //OrderDetailsDao.getInstance().delete(con, product);
             ps = con.prepareStatement(sql);
-            ps.setInt(1, product.getProductId());
+            ps.setInt(1, productId);
             ps.executeUpdate();
 
         } finally {
@@ -98,7 +98,7 @@ public class ProductsDao {
                    }
        return product;
    }
-   private ArrayList<Products> findAll(Connection con) throws SQLException{
+   public ArrayList<Products> findAll(Connection con) throws SQLException{
        PreparedStatement ps=null;
        ResultSet rs=null;
        ArrayList<Products> products=new ArrayList<>();

@@ -17,7 +17,15 @@ import java.util.ArrayList;
  * @author Ivana
  */
 public class SupplierService {
-    
+   
+    private static final SupplierService instance = new SupplierService();
+
+    private SupplierService() {
+    }
+
+    public static SupplierService getInstance() {
+        return instance;
+    }
      public void addNewSupplier(Suppliers supplier) throws WarehouseException{
         Connection con=null;
         try{
