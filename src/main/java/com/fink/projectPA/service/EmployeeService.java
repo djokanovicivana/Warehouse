@@ -5,6 +5,7 @@
 package com.fink.projectPA.service;
 
 import com.fink.projectPA.dao.EmployeesDao;
+import com.fink.projectPA.dao.OrdersDao;
 import com.fink.projectPA.dao.ResourceManager;
 import com.fink.projectPA.data.Employees;
 import com.fink.projectPA.exception.WarehouseException;
@@ -75,6 +76,7 @@ public class EmployeeService {
             if (employee != null) {
                 EmployeesDao.getInstance().delete(con, employeeId);
             }
+            OrdersDao.getInstance().deleteWithEmployee(con, employeeId);
 
             con.commit();
         } catch (SQLException ex) {
@@ -89,8 +91,8 @@ public class EmployeeService {
           try{
               con=ResourceManager.getConnection();
               con.setAutoCommit(false);
-              if(employee!=null){
-              EmployeesDao.getInstance().update(con, employee);}
+             // if(employee!=null){
+              EmployeesDao.getInstance().update(con, employee);
               con.commit();
           }catch (SQLException ex) {
             ResourceManager.rollbackTransactions(con);

@@ -44,7 +44,7 @@ public class CustomersDao {
     }
     public void update(Connection con, Customers customer)throws SQLException{
         PreparedStatement ps=null;
-        String sql="UPDATE Customers SET CustomerName=?, ContactPerson=?, Adress=?, City=?, PostCode=?, Country=? where CustomerId=?";
+        String sql="UPDATE Customers SET CustomerName=?, ContactPerson=?, Adress=?, City=?, PostCode=?, Country=? WHERE CustomerId=?";
         try{
             ps=con.prepareStatement(sql);
             ps.setString(1, customer.getCustomerName());

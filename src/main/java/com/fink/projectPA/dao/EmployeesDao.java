@@ -89,7 +89,7 @@ public class EmployeesDao {
         PreparedStatement ps=null;
         ResultSet rs=null;
         ArrayList <Employees> employees=new ArrayList<Employees>();
-        String sql="SELECT * FROM Customers";
+        String sql="SELECT * FROM Employees";
         try{
             ps=con.prepareStatement(sql);
             rs=ps.executeQuery();

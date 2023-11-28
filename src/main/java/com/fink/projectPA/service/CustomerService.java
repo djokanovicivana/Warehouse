@@ -5,6 +5,7 @@
 package com.fink.projectPA.service;
 
 import com.fink.projectPA.dao.CustomersDao;
+import com.fink.projectPA.dao.OrdersDao;
 import com.fink.projectPA.dao.ResourceManager;
 import com.fink.projectPA.data.Customers;
 import com.fink.projectPA.exception.WarehouseException;
@@ -75,6 +76,7 @@ public class CustomerService {
             if (customer != null) {
                 CustomersDao.getInstance().delete(con, customerId);
             }
+            OrdersDao.getInstance().deleteWithCustomer(con, customerId);
 
             con.commit();
         } catch (SQLException ex) {

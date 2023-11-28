@@ -65,7 +65,7 @@ public class ShipperService {
              ResourceManager.closeConnection(con);
          }
      }
-     public void deleteShippers(int shipperId) throws WarehouseException{
+     public void deleteShipper(int shipperId) throws WarehouseException{
         Connection con = null;
         try {
             con = ResourceManager.getConnection();

@@ -17,6 +17,7 @@ public class WarehouseDemo {
      public static void main(String[] args) throws Exception {
          //addTestCustomers();
         System.out.print(findCustomer());
+        updateCustomer();
     
     }
       private static void addTestCustomers() throws WarehouseException {
@@ -25,8 +26,10 @@ public class WarehouseDemo {
      }
        private static Customers findCustomer() throws WarehouseException {
         return customerService.findCustomer(1);
-    
-     }
+       }
+        private static void updateCustomer() throws WarehouseException{
+            customerService.updateCustomer(new Customers("Marija", "Andjela", "Kneza Mihaila", "Kragujevac", "34000", "Srbija"));
+        }
 }
     
 

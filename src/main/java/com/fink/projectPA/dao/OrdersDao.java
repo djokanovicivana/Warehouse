@@ -128,4 +128,37 @@ public class OrdersDao {
             ResourceManager.closeResources(null, ps);
         }
     }
+    public void deleteWithCustomer(Connection con, int customerId) throws SQLException{
+        PreparedStatement ps=null;
+        String sql="DELETE FROM Orders WHERE CustomerId=?";
+        try{
+            ps=con.prepareStatement(sql);
+            ps.setInt(1, customerId);
+            ps.executeUpdate();
+        }
+        finally{
+            ResourceManager.closeResources(null, ps);}
+    }
+     public void deleteWithEmployee(Connection con, int employeeId) throws SQLException{
+        PreparedStatement ps=null;
+        String sql="DELETE FROM Orders WHERE EmployeeId=?";
+        try{
+            ps=con.prepareStatement(sql);
+            ps.setInt(1, employeeId);
+            ps.executeUpdate();
+        }
+        finally{
+            ResourceManager.closeResources(null, ps);}
+    }
+     public void deleteWithShipper(Connection con, int shipperId) throws SQLException{
+        PreparedStatement ps=null;
+        String sql="DELETE FROM Orders WHERE ShipperId=?";
+        try{
+            ps=con.prepareStatement(sql);
+            ps.setInt(1, shipperId);
+            ps.executeUpdate();
+        }
+        finally{
+            ResourceManager.closeResources(null, ps);}
+    }
 }
