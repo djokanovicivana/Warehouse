@@ -45,7 +45,7 @@ public class CustomerService {
      public Customers findCustomer(int customerId) throws WarehouseException{
          Connection con=null;
          try{
-             ResourceManager.getConnection();
+             con=ResourceManager.getConnection();
              return CustomersDao.getInstance().find(con, customerId);
      }catch (SQLException ex) {
             ResourceManager.rollbackTransactions(con);
@@ -56,7 +56,7 @@ public class CustomerService {
      public ArrayList<Customers> findAllCustomers() throws WarehouseException{
          Connection con=null;
          try{
-             ResourceManager.getConnection();
+             con=ResourceManager.getConnection();
              return CustomersDao.getInstance().findAll(con);
          }catch (SQLException ex) {
             ResourceManager.rollbackTransactions(con);
