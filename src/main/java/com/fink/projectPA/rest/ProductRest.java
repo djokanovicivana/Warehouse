@@ -8,6 +8,7 @@ import com.fink.projectPA.data.Employees;
 import com.fink.projectPA.data.Products;
 import com.fink.projectPA.data.Shippers;
 import com.fink.projectPA.exception.WarehouseException;
+import com.fink.projectPA.service.AdvancedService;
 import com.fink.projectPA.service.EmployeeService;
 import com.fink.projectPA.service.ProductService;
 import com.fink.projectPA.service.ShipperService;
@@ -37,6 +38,18 @@ public class ProductRest {
     @Path("/all")
     public ArrayList<Products> getAllProducts() throws WarehouseException{
         return productService.findAllProducts();
+    }
+    @GET()
+    @Path("/supplier/{supplierId}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public ArrayList<Products> getProductsSupplier(@PathParam("supplierId") int supplierId) throws WarehouseException{
+        return AdvancedService.getInstance().findProductsForSupplier(supplierId);
+    }
+    @GET()
+    @Path("/shipper/{shipperId}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public ArrayList<Products> getProductsShipper(@PathParam("shipperId") int shipperId) throws WarehouseException{
+        return AdvancedService.getInstance().findProductsForShipper(shipperId);
     }
     @GET()
     @Path("/{productId}")

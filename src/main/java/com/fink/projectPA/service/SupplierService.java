@@ -4,6 +4,7 @@
  */
 package com.fink.projectPA.service;
 
+import com.fink.projectPA.dao.ProductsDao;
 import com.fink.projectPA.dao.ResourceManager;
 import com.fink.projectPA.dao.SuppliersDao;
 import com.fink.projectPA.data.Suppliers;
@@ -70,11 +71,12 @@ public class SupplierService {
         try {
             con = ResourceManager.getConnection();
             con.setAutoCommit(false);
-
+            ProductsDao.getInstance().deleteWithSupplier(con, supplierId);
             Suppliers supplier = SuppliersDao.getInstance().find(con,supplierId);
             if (supplier != null) {
                 SuppliersDao.getInstance().delete(con, supplierId);
             }
+            
 
             con.commit();
         } catch (SQLException ex) {

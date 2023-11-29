@@ -113,12 +113,33 @@ public class OrdersDao {
         }
         return orders;
     }
+    public ArrayList<Orders> findForShipper(Connection con, int shipperId) throws SQLException{
+        PreparedStatement ps=null;
+        ResultSet rs=null;
+        ArrayList<Orders> orders=new ArrayList<>();
+        String sql="SELECT * FROM Orders WHERE ShipperId=?";
+        try{
+            ps=con.prepareStatement(sql);
+            ps.setInt(1, shipperId);
+            rs=ps.executeQuery();
+            while(rs.next()){
+                Customers customer=CustomersDao.getInstance().find(con, rs.getInt("CustomerId"));
+                Employees employee=EmployeesDao.getInstance().find(con, rs.getInt("EmployeeId"));
+                Shippers shipper=ShippersDao.getInstance().find(con, rs.getInt("ShipperId"));
+                orders.add(new Orders(rs.getInt("OrderId"),rs.getDate("OrderDate"), customer, employee, shipper));
+            }
+        }
+        finally{
+            ResourceManager.closeResources(rs, ps);
+        }
+        return orders;
+    }
     public void delete(Connection con, int orderId)throws SQLException{
         PreparedStatement ps=null;
         PreparedStatement ps1=null;
         String sql="DELETE FROM Orders WHERE OrderId=?";
         try{
-            //OrderDetailsDao.getInstance().deleteWithOrder(con, order);
+            OrderDetailsDao.getInstance().deleteWithOrder(con, orderId);
             ps=con.prepareStatement(sql);
             ps.setInt(1, orderId);
             ps.executeUpdate();
@@ -161,4 +182,27 @@ public class OrdersDao {
         finally{
             ResourceManager.closeResources(null, ps);}
     }
+      public ArrayList<Orders> findForCustomer(Connection con, int customerId) throws SQLException{
+        PreparedStatement ps=null;
+        ResultSet rs=null;
+        ArrayList<Orders> orders=new ArrayList<>();
+        String sql="SELECT * FROM Orders WHERE CustomerId=?";
+        try{
+            ps=con.prepareStatement(sql);
+            ps.setInt(1,customerId);
+            rs=ps.executeQuery();
+            while(rs.next()){
+                Customers customer=CustomersDao.getInstance().find(con, rs.getInt("CustomerId"));
+                Employees employee=EmployeesDao.getInstance().find(con, rs.getInt("EmployeeId"));
+                Shippers shipper=ShippersDao.getInstance().find(con, rs.getInt("ShipperId"));
+                orders.add(new Orders(rs.getInt("OrderId"),rs.getDate("OrderDate"), customer, employee, shipper));
+            }
+        }
+        finally{
+            ResourceManager.closeResources(rs, ps);
+        }
+        return orders;
+    }
+  
+     
 }

@@ -71,7 +71,7 @@ public class CustomerService {
         try {
             con = ResourceManager.getConnection();
             con.setAutoCommit(false);
-
+            OrdersDao.getInstance().deleteWithCustomer(con, customerId);
             Customers customer = CustomersDao.getInstance().find(con,customerId);
             if (customer != null) {
                 CustomersDao.getInstance().delete(con, customerId);

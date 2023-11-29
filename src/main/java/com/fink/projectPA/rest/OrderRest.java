@@ -8,6 +8,7 @@ import com.fink.projectPA.data.Employees;
 import com.fink.projectPA.data.Orders;
 import com.fink.projectPA.data.Shippers;
 import com.fink.projectPA.exception.WarehouseException;
+import com.fink.projectPA.service.AdvancedService;
 import com.fink.projectPA.service.EmployeeService;
 import com.fink.projectPA.service.OrderService;
 import com.fink.projectPA.service.ShipperService;
@@ -37,6 +38,21 @@ public class OrderRest {
     @Path("/all")
     public ArrayList<Orders> getAllOrders() throws WarehouseException{
         return orderService.findAllOrders();
+    }
+    @GET()
+    @Path("/totalPrice")
+    public  double getTotalPrice() throws WarehouseException{
+        return AdvancedService.getInstance().totalOrderPrice();
+    }
+    @GET()
+    @Path("/totalPriceCustomer/{customerId}")
+    public  double getTotalPriceCustomer(@PathParam("customerId") int customerId) throws WarehouseException{
+        return AdvancedService.getInstance().totalOrderPriceCustomer(customerId);
+    }
+     @GET()
+    @Path("/totalPriceShipper/{shipperId}")
+    public  double getTotalPriceShipper(@PathParam("shipperId") int shipperId) throws WarehouseException{
+        return AdvancedService.getInstance().totalOrderPriceShipper(shipperId);
     }
     @GET()
     @Path("/{orderId}")

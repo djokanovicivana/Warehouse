@@ -4,6 +4,7 @@
  */
 package com.fink.projectPA.service;
 
+import com.fink.projectPA.dao.OrdersDao;
 import com.fink.projectPA.dao.ResourceManager;
 import com.fink.projectPA.dao.ShippersDao;
 import com.fink.projectPA.data.Shippers;
@@ -70,7 +71,7 @@ public class ShipperService {
         try {
             con = ResourceManager.getConnection();
             con.setAutoCommit(false);
-
+            OrdersDao.getInstance().deleteWithShipper(con, shipperId);
             Shippers shipper = ShippersDao.getInstance().find(con,shipperId);
             if (shipper != null) {
                 ShippersDao.getInstance().delete(con, shipperId);

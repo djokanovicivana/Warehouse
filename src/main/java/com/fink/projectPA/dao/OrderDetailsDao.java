@@ -88,6 +88,29 @@ public class OrderDetailsDao {
     }
         return orderDetails;  
 }
+     public OrderDetails findForOrder(Connection con, int orderId) throws SQLException{
+        PreparedStatement ps=null;
+        ResultSet rs=null;
+        OrderDetails orderDetails;
+        String sql="SELECT * FROM OrderDetails WHERE OrderId=?";
+        try{
+            ps=con.prepareStatement(sql);
+            ps.setInt(1, orderId);
+            rs=ps.executeQuery();
+            if(rs.next()){
+                Orders order=OrdersDao.getInstance().find(con, rs.getInt("OrderId"));
+                Products product=ProductsDao.getInstance().find(con, rs.getInt("ProductId"));
+                orderDetails=new OrderDetails(rs.getInt("OrderDetailsId"), order, product, rs.getInt("Quantity"));
+            }
+            else{
+                return null;
+            }
+        }
+        finally{
+            ResourceManager.closeResources(rs, ps);
+    }
+        return orderDetails;  
+}
     public ArrayList<OrderDetails> findAll(Connection con) throws SQLException{
         PreparedStatement ps=null;
         ResultSet rs=null;

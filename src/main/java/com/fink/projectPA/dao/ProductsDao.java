@@ -62,6 +62,19 @@ public class ProductsDao {
             ResourceManager.closeResources(null, ps);
         }
     }
+      public void deleteWithSupplier(Connection con, int supplierId) throws SQLException {
+        PreparedStatement ps = null;
+        String sql="DELETE FROM Products WHERE SupplierId=?";  
+        try {
+            //OrderDetailsDao.getInstance().delete(con, product);
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, supplierId);
+            ps.executeUpdate();
+
+        } finally {
+            ResourceManager.closeResources(null, ps);
+        }
+    }
      public void update(Connection con, Products product) throws SQLException {
         PreparedStatement ps = null;
         String sql="UPDATE Products SET ProductName=?, SupplierId=?, ProductCategory=?, PricePerUnit=? WHERE ProductId=?";
@@ -105,6 +118,26 @@ public class ProductsDao {
        String sql="SELECT * FROM Products";
        try{
            ps=con.prepareStatement(sql);
+           rs=ps.executeQuery();
+           while(rs.next()){
+                Suppliers supplier=SuppliersDao.getInstance().find(con, rs.getInt("ProductId"));
+                products.add(new Products(rs.getInt("ProductId"), rs.getString("ProductName"), supplier, rs.getString("ProductCategory"), rs.getDouble("PricePerUnit")));
+           } 
+       }
+       finally{
+           ResourceManager.closeResources(rs, ps);
+       }
+       return products;
+       
+   }
+    public ArrayList<Products> findForSupplier(Connection con, int supplierId) throws SQLException{
+       PreparedStatement ps=null;
+       ResultSet rs=null;
+       ArrayList<Products> products=new ArrayList<>();
+       String sql="SELECT * FROM Products WHERE SupplierId=?";
+       try{
+           ps=con.prepareStatement(sql);
+           ps.setInt(1,supplierId);
            rs=ps.executeQuery();
            while(rs.next()){
                 Suppliers supplier=SuppliersDao.getInstance().find(con, rs.getInt("ProductId"));

@@ -44,7 +44,7 @@ public class CustomersDao {
     }
     public void update(Connection con, Customers customer)throws SQLException{
         PreparedStatement ps=null;
-        String sql="UPDATE Customers SET CustomerName=?, ContactPerson=?, Adress=?, City=?, PostCode=?, Country=? WHERE CustomerId=?";
+        String sql="UPDATE Customers SET CustomerName=?,ContactPerson=?,Adress=?,City=?,PostCode=?,Country=? WHERE CustomerId=?";
         try{
             ps=con.prepareStatement(sql);
             ps.setString(1, customer.getCustomerName());
@@ -99,6 +99,23 @@ public class CustomersDao {
         ResultSet rs=null;
         ArrayList <Customers> customers=new ArrayList<Customers>();
         String sql="SELECT * FROM Customers";
+        try{
+            ps=con.prepareStatement(sql);
+            rs=ps.executeQuery();
+            while(rs.next()){
+                customers.add(new Customers(rs.getInt("CustomerId"), rs.getString("CustomerName"), rs.getString("ContactPerson"), rs.getString("Adress"), rs.getString("City"), rs.getString("PostCode"),rs.getString("Country")));
+            }}
+            finally{
+                    ResourceManager.closeResources(rs,ps);
+                    }
+        return customers;
+        
+    }
+    public ArrayList<Customers> findAllSortedByName(Connection con) throws SQLException{
+        PreparedStatement ps=null;
+        ResultSet rs=null;
+        ArrayList <Customers> customers=new ArrayList<Customers>();
+        String sql="SELECT * FROM Customers ORDER BY CustomerName";
         try{
             ps=con.prepareStatement(sql);
             rs=ps.executeQuery();

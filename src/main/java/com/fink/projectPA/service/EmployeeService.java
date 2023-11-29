@@ -71,12 +71,13 @@ public class EmployeeService {
         try {
             con = ResourceManager.getConnection();
             con.setAutoCommit(false);
-
+ 
+            OrdersDao.getInstance().deleteWithEmployee(con, employeeId);
             Employees employee = EmployeesDao.getInstance().find(con,employeeId);
             if (employee != null) {
                 EmployeesDao.getInstance().delete(con, employeeId);
             }
-            OrdersDao.getInstance().deleteWithEmployee(con, employeeId);
+            
 
             con.commit();
         } catch (SQLException ex) {

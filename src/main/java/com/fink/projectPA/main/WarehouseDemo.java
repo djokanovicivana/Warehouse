@@ -6,6 +6,7 @@ package com.fink.projectPA.main;
 
 import com.fink.projectPA.data.Customers;
 import com.fink.projectPA.exception.WarehouseException;
+import com.fink.projectPA.service.AdvancedService;
 import com.fink.projectPA.service.CustomerService;
 
 /**
@@ -15,9 +16,10 @@ import com.fink.projectPA.service.CustomerService;
 public class WarehouseDemo {
      private static final CustomerService customerService = CustomerService.getInstance();
      public static void main(String[] args) throws Exception {
-         //addTestCustomers();
-        System.out.print(findCustomer());
-        updateCustomer();
+        addTestCustomers();
+       // System.out.print(findCustomer());
+       // updateCustomer();
+       System.out.print(AdvancedService.getInstance().findProductsForSupplier(4));
     
     }
       private static void addTestCustomers() throws WarehouseException {
@@ -28,7 +30,7 @@ public class WarehouseDemo {
         return customerService.findCustomer(1);
        }
         private static void updateCustomer() throws WarehouseException{
-            customerService.updateCustomer(new Customers("Marija", "Andjela", "Kneza Mihaila", "Kragujevac", "34000", "Srbija"));
+            customerService.updateCustomer(new Customers(2, "Marija", "Andjela", "Kneza Mihaila", "Kragujevac", "34000", "Srbija"));
         }
 }
     
